@@ -26,7 +26,7 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and a
   As $\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$ cannot currently be supplied, we only implement the calculation of forward iterates of $\mathcal{T}\_0$; please refer to $n\_{\text{iter}}$ for more on this.
 
 - $\mathcal{I}$ is some closed bounded interval $[a, b]$ satisfying $x^\* \in \mathcal{I}$ and $f(\mathcal{I}) = \mathcal{I}$.
-  In practice, this should be a `Tuple{Float64, Float64}` value `(a, b)`.
+  In practice, this should be an `Interval` value.
   Currently, you do need to determine this interval by manual inspection of $f$; in the future we may implement an algorithm for determination of this interval under certain assumptions about $f$ (e.g., $\mathcal{C^1}$ differentiability).
   
   Note that $\mathcal{I}$ can and should be chosen to be as small as possible; as long as $\mathcal{I}$ satisfies the two aforementioned requirements, any points lying outside of $\mathcal{I}$ cannot be involved in homoclinic orbits.
