@@ -6,9 +6,9 @@ A Julia implementation via interval arithmetic of the algorithm described in *Av
 ## Finding homoclinic orbits
 The algorithm from the paper is given below:
 
-![Listing 1 from *Avrutin V et al.*](AvrutinSearch/docs/resources/Listing1\_pseudocode.png)
+![Listing 1 from *Avrutin V et al.*](AvrutinSearch/docs/resources/Listing1_pseudocode.png)
 
-You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and another parameter $n\_{\text{iter}}$ to the function `AvrutinSearch.homoclinic\_to\_equilibrium`.
+You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and another parameter $n\_{\text{iter}}$ to the function `AvrutinSearch.homoclinic_to_equilibrium`.
 
 - $f$ should be a function `f(x::Float64)::Float64`.
   We might later supply helper functions for converting discrete-sampled maps to such functions by various interpolation methods, but you can for now use analytic descriptions for maps or implement your own linear interpolation.
@@ -21,7 +21,7 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and a
   Practically, $\mathcal{T}\_0$ is supplied as an `Interval` value and should contain $x^\*$.
   Some guidelines for selecting $\mathcal{T}\_0$ are given in the paper by Avrutin et al.:
 
-  > ![Determination of target sets from *Avrutin V et al.*](AvrutinSearch/docs/resources/target\_set\_determination.png)
+  > ![Determination of target sets from *Avrutin V et al.*](AvrutinSearch/docs/resources/target_set_determination.png)
 
   As $\{f\_j^{-1}, \mathcal{V}\_j\}\_{j=1}^k$ cannot currently be supplied, we only implement the calculation of forward iterates of $\mathcal{T}\_0$; please refer to $n\_{\text{iter}}$ for more on this.
 
