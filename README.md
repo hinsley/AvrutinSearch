@@ -8,24 +8,24 @@ The algorithm from the paper is given below:
 
 ![Listing 1 from *Avrutin V et al.*](AvrutinSearch/docs/resources/Listing1\_pseudocode.png)
 
-You must supply $f$, $x^*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and another parameter $n\_{\text{iter}}$ to the function `AvrutinSearch.homoclinic\_to\_equilibrium`.
+You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and another parameter $n\_{\text{iter}}$ to the function `AvrutinSearch.homoclinic\_to\_equilibrium`.
 
 - $f$ should be a function `f(x::Float64)::Float64`.
   We might later supply helper functions for converting discrete-sampled maps to such functions by various interpolation methods, but you can for now use analytic descriptions for maps or implement your own linear interpolation.
   Some restrictions on $f$ apply but are discussed elsewhere (e.g., in the description of the invariant interval $\mathcal{I}$).
 
-- $x^*$ should be a `Float64` value. Make sure that this is a repelling fixed point of the map!
-  The easiest way to check this is by representing $x^*$ as a variable `x` and running `f(x) == x`; this should evaluate to `true`.
+- $x^\*$ should be a `Float64` value. Make sure that this is a repelling fixed point of the map!
+  The easiest way to check this is by representing $x^\*$ as a variable `x` and running `f(x) == x`; this should evaluate to `true`.
 
-- $\mathcal{T}\_0$ is the initial target subset of $\mathbb{W}^u(x^*)$ being searched for.
-  Practically, $\mathcal{T}\_0$ is supplied as an `Interval` value and should contain $x^*$.
+- $\mathcal{T}\_0$ is the initial target subset of $\mathbb{W}^u(x^\*)$ being searched for.
+  Practically, $\mathcal{T}\_0$ is supplied as an `Interval` value and should contain $x^\*$.
   Some guidelines for selecting $\mathcal{T}\_0$ are given in the paper by Avrutin et al.:
 
   > ![Determination of target sets from *Avrutin V et al.*](AvrutinSearch/docs/resources/target\_set\_determination.png)
 
   As $\{f\_j^{-1}, \mathcal{V}\_j\}\_{j=1}^k$ cannot currently be supplied, we only implement the calculation of forward iterates of $\mathcal{T}\_0$; please refer to $n\_{\text{iter}}$ for more on this.
 
-- $\mathcal{I}$ is some closed bounded interval $[a, b]$ satisfying $x^* \in \mathcal{I}$ and $f(\mathcal{I}) = \mathcal{I}$.
+- $\mathcal{I}$ is some closed bounded interval $[a, b]$ satisfying $x^\* \in \mathcal{I}$ and $f(\mathcal{I}) = \mathcal{I}$.
   In practice, this should be a `Tuple{Float64, Float64}` value `(a, b)`.
   Currently, you do need to determine this interval by manual inspection of $f$; in the future we may implement an algorithm for determination of this interval under certain assumptions about $f$ (e.g., $\mathcal{C^1}$ differentiability).
   
