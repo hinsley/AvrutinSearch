@@ -23,7 +23,7 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and a
 
   > ![Determination of target sets from *Avrutin V et al.*](AvrutinSearch/docs/resources/target_set_determination.png)
 
-  As $\{f\_j^{-1}, \mathcal{V}\_j\}\_{j=1}^k$ cannot currently be supplied, we only implement the calculation of forward iterates of $\mathcal{T}\_0$; please refer to $n\_{\text{iter}}$ for more on this.
+  As $\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$ cannot currently be supplied, we only implement the calculation of forward iterates of $\mathcal{T}\_0$; please refer to $n\_{\text{iter}}$ for more on this.
 
 - $\mathcal{I}$ is some closed bounded interval $[a, b]$ satisfying $x^\* \in \mathcal{I}$ and $f(\mathcal{I}) = \mathcal{I}$.
   In practice, this should be a `Tuple{Float64, Float64}` value `(a, b)`.
@@ -42,4 +42,4 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and a
   If zero, then no forward iterates are used.
   More iterates mean more memory consumption for storing the multiple interval (connected) components of $\mathcal{T}$, but less pre-image computation steps during search; this can drastically improve search time.
 
-$\{f\_j^{-1}, \mathcal{V}\_j\}\_{j=1}^k$ is computed automatically, but in the future, we may allow these data to be manually supplied.
+$\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$ is computed automatically, but in the future, we may allow these data to be manually supplied.
