@@ -8,12 +8,12 @@ The algorithm from the paper is given below:
 
 ![Listing 1 from *Avrutin V et al.*](AvrutinSearch/docs/resources/Listing1_pseudocode.png)
 
-You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and two other parameters $n\_{\text{iter}}$ and $\text{tol}$ to the function `AvrutinSearch.homoclinic_to_equilibrium`.
+You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and the additional parameter $n\_{\text{iter}}$ to the function `AvrutinSearch.homoclinic_to_equilibrium`.
 
-- $f$ should be a function `f(x::Float64)::Float64`.
-  We might later supply helper functions for converting discrete-sampled maps to such functions by various interpolation methods, but you can for now use analytic descriptions for maps or implement your own linear interpolation.
-  Some restrictions on $f$ apply but are discussed elsewhere (e.g., in the description of the invariant interval $\mathcal{I}$).
-
+- $f$ should be a vector of input-output pairs `Vector{Tuple{Float64, Float64}}` corresponding to pairs $(x, f(x))$.
+  A linear interpolation of the supplied sample points is taken.
+  In the future we may allow you to supply more general functions, but doing so requires far more computationally inefficient methods for computing iterates of the initial target interval $T_0$.
+  
 - $x^\*$ should be a `Float64` value. Make sure that this is a repelling fixed point of the map!
   The easiest way to check this is by representing $x^\*$ as a variable `x` and running `f(x) == x`; this should evaluate to `true`.
 
@@ -23,27 +23,25 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and t
 
   > ![Determination of target sets from *Avrutin V et al.*](AvrutinSearch/docs/resources/target_set_determination.png)
 
-  As $\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$ cannot currently be supplied, we only implement the calculation of forward iterates of $\mathcal{T}\_0$; please refer to $n\_{\text{iter}}$ for more on this.
+  We currently only implement the calculation of forward iterates of $\mathcal{T}\_0$; please refer to $n\_{\text{iter}}$ for more on this.
+  In the future we may add a cache for the data $\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$, though forward iterates of $\mathcal{T}\_0$ would still be required in most cases to achieve optimal performance.
 
 - $\mathcal{I}$ is some closed bounded interval $[a, b]$ satisfying $x^\* \in \mathcal{I}$ and $f(\mathcal{I}) = \mathcal{I}$.
   In practice, this should be an `Interval` value.
-  Currently, you do need to determine this interval by manual inspection of $f$; in the future we may implement an algorithm for determination of this interval under certain assumptions about $f$ (e.g., $\mathcal{C^1}$ differentiability).
+  Currently, you do need to determine this interval by manual inspection of $f$; in the future we may implement an algorithm for determination of this interval.
   
   Note that $\mathcal{I}$ can and should be chosen to be as small as possible; as long as $\mathcal{I}$ satisfies the two aforementioned requirements, any points lying outside of $\mathcal{I}$ cannot be involved in homoclinic orbits.
   Moreover, there should be some positive integer $k$ such that for each $x \in \mathcal{I}$ the pre-image set $f|\_\mathcal{I}^{-1}(x)$ has at most $k$ many elements; otherwise the pre-image search tree may become intractibly broad.
   In particular, $f$ should have $k$ many interval ``branches'' $\mathcal{V}\_1, \dots, \mathcal{V}\_k$ in $\mathcal{I}$ on which its restriction is invertible.
+  Because the function $f$ is reconstructed by linearly interpolating finitely many sample points of its graph, this branch limit is currently guaranteed.
 
 - $\mathcal{r\_{\max}}$ should be a `UInt64` value.
   This is a maximal depth in the pre-image search tree.
   If $\mathcal{r\_{\max}}$ is zero, there will be no maximal rank of pre-image imposed (which is probably not the best idea).
 
 - $n\_{\text{iter}}$ should be a `UInt64` value.
-  This controls how many forward iterates of the initially supplied target interval $\mathcal{T}\_0$ are taken as a true target set $\mathcal{T}$.
+  This controls how many forward iterates of the initially supplied target interval $\mathcal{T}\_0$ are taken as a final target set $\mathcal{T}$.
   If zero, then no forward iterates are used.
   More iterates mean more memory consumption for storing the multiple interval (connected) components of $\mathcal{T}$, but less pre-image computation steps during search; this can drastically improve search time.
 
-- $\text{tol}$ should be a `Float64` value.
-  This is the numerical resolution used for finding extrema to partition upon when finding the domains $\mathcal{V}\_j$.
-  You can find its default value by checking the source code for this package.
-
-$\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$ is computed automatically, but in the future, we may allow these data to be manually supplied.
+$\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$ is computed automatically.
