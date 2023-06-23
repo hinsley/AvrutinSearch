@@ -12,7 +12,7 @@ Note that line 11 in the pseudocode above is incorrect; it should be **if $p \in
 
 You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and the additional parameter $n\_{\text{iter}}$ to the function `AvrutinSearch.homoclinic_to_equilibrium`.
 
-- $f$ should be a vector of input-output pairs `Vector{Tuple{Float64, Float64}}` corresponding to pairs $(x, f(x))$.
+- $f$ should be two vectors of `Float64` values each having the same length which, when `zip`ped together, have elements corresponding to pairs $(x, f(x))$.
   A linear interpolation of the supplied sample points is taken.
   In the future we may allow you to supply more general functions, but doing so requires far more computationally inefficient methods for computing iterates of the initial target interval $T_0$.
   
