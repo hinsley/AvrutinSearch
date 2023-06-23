@@ -18,8 +18,13 @@ function homoclinic_to_equilibrium(f, x_star::Float64, T_0::Interval{Float64}, I
     end
 
     # Check if x_star is in T_0 and I.
-    if !(x_star ∈ T_0) || !(x_star ∈ I)
-        throw(ArgumentError("x_star must be in T_0 and I."))
+    if !(x_star ∈ T_0)
+        throw(ArgumentError("x_star must be in T_0."))
+    end
+
+    # Check if T_0 is a subset of I.
+    if !(T_0 ⊆ I)
+        throw(ArgumentError("T_0 must be a subset of I."))
     end
     
     # Check if f(I) = I.
