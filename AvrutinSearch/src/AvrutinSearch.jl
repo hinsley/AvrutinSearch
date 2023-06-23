@@ -6,7 +6,7 @@ using Peaks
 using Roots
 
 
-function homoclinic_to_equilibrium(f, x_star::Float64, T_0::Interval{Float64}, I::Interval{Float64}, r_max::UInt64, n_iter::UInt64, tol::Float64=1e-5)::Union{Bool, Nothing}
+function homoclinic_to_equilibrium(f, x_star::Float64, T_0::Interval{Float64}, I::Interval{Float64}, r_max::UInt64, n_iter::UInt64=0, tol::Float64=1e-5)::Union{Bool, Nothing}
     # Return values:
     # true: Connection from x_star to T found.
     # false: Connection from x_star to T does not exist.
