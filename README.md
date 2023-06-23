@@ -8,6 +8,8 @@ The algorithm from the paper is given below:
 
 ![Listing 1 from *Avrutin V et al.*](AvrutinSearch/docs/resources/Listing1_pseudocode.png)
 
+Note that line 11 in the pseudocode above is incorrect; it should be **if $p \in f(V_j)$ then**.
+
 You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and the additional parameter $n\_{\text{iter}}$ to the function `AvrutinSearch.homoclinic_to_equilibrium`.
 
 - $f$ should be a vector of input-output pairs `Vector{Tuple{Float64, Float64}}` corresponding to pairs $(x, f(x))$.
