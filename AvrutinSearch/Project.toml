@@ -2,3 +2,8 @@ name = "AvrutinSearch"
 uuid = "ed76c251-e25f-44f6-91ec-f57abd734d0d"
 authors = ["Carter David Hinsley <carterhinsley@outlook.com>"]
 version = "0.1.0"
+
+[deps]
+IntervalArithmetic = "d1acc4aa-44c8-5952-acd4-ba5d80a2a253"
+Peaks = "18e31ff7-3703-566c-8e60-38913d67486b"
+Roots = "f2b01f46-fcfa-551c-844a-d8ac1e96c665"

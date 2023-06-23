@@ -8,7 +8,7 @@ The algorithm from the paper is given below:
 
 ![Listing 1 from *Avrutin V et al.*](AvrutinSearch/docs/resources/Listing1_pseudocode.png)
 
-You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and another parameter $n\_{\text{iter}}$ to the function `AvrutinSearch.homoclinic_to_equilibrium`.
+You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and two other parameters $n\_{\text{iter}}$ and $\text{tol}$ to the function `AvrutinSearch.homoclinic_to_equilibrium`.
 
 - $f$ should be a function `f(x::Float64)::Float64`.
   We might later supply helper functions for converting discrete-sampled maps to such functions by various interpolation methods, but you can for now use analytic descriptions for maps or implement your own linear interpolation.
@@ -41,5 +41,9 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and a
   This controls how many forward iterates of the initially supplied target interval $\mathcal{T}\_0$ are taken as a true target set $\mathcal{T}$.
   If zero, then no forward iterates are used.
   More iterates mean more memory consumption for storing the multiple interval (connected) components of $\mathcal{T}$, but less pre-image computation steps during search; this can drastically improve search time.
+
+- $\text{tol}$ should be a `Float64` value.
+  This is the numerical resolution used for finding extrema to partition upon when finding the domains $\mathcal{V}\_j$.
+  You can find its default value by checking the source code for this package.
 
 $\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$ is computed automatically, but in the future, we may allow these data to be manually supplied.
