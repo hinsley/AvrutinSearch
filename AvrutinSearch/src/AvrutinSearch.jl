@@ -31,11 +31,13 @@ function homoclinic_to_equilibrium(xs::Vector{Float64}, fs::Vector{Float64}, x_s
         throw(ArgumentError("T_0 must be a subset of I."))
     end
     
-    # TODO: Implement iterates of intervals for linearly interpolated functions.
-    # Check if f(I) = I.
-    #if f(I) != I
-    #    throw(ArgumentError("f(I) must equal I."))
-    #end
+    # Check if f(I) ⊆ I.
+    I_indices = findfirst(x -> x ∈ I, xs):findlast(x -> x ∈ I, xs)
+    f_Is = vcat([f(I.lo)], fs[I_indices], [f(I.hi)])
+    f_I = min(f_Is...)..max(f_Is...)
+    if !(f_I ⊆ I)
+        throw(ArgumentError("f(I) must be contained within I."))
+    end
 
     # Compute T as `n_iter'th iterate of T_0.
     T = T_0
