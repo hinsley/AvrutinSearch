@@ -1,5 +1,5 @@
 module AvrutinSearch
-export homoclinic_to_equilibrium
+export homoclinic_to_equilibrium, iterate_interval
 
 using Interpolations
 using IntervalArithmetic
