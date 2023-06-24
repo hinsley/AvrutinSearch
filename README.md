@@ -25,9 +25,6 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and t
 
   > ![Determination of target sets from *Avrutin V et al.*](AvrutinSearch/docs/resources/target_set_determination.png)
 
-  We currently only implement the calculation of forward iterates of $\mathcal{T}\_0$; please refer to $n\_{\text{iter}}$ for more on this.
-  In the future we may add a cache for the data $\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$, though forward iterates of $\mathcal{T}\_0$ would still be required in most cases to achieve optimal performance.
-
 - $\mathcal{I}$ is some closed bounded interval $[a, b]$ satisfying $x^\* \in \mathcal{I}$ and $f(\mathcal{I}) \subseteq \mathcal{I}$ (the paper assumes that $f(I) = I$, but this is unnecessary).
   In practice, this should be an `Interval` value.
   Currently, you do need to determine this interval by manual inspection of $f$; in the future we may implement an algorithm for determination of this interval.
@@ -43,7 +40,14 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and t
 
 - $n\_{\text{iter}}$ should be a `UInt64` value.
   This controls how many forward iterates of the initially supplied target interval $\mathcal{T}\_0$ are taken as a final target set $\mathcal{T}$.
-  If zero, then no forward iterates are used.
-  More iterates mean more memory consumption for storing the multiple interval (connected) components of $\mathcal{T}$, but less pre-image computation steps during search; this can drastically improve search time.
+  If zero, then no forward iterates are used; in this case $\mathcal{T} = \mathcal{T}\_0$.
+  More iterates mean  less pre-image computation steps during search; this can drastically improve search time.
 
 $\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$ is computed automatically.
+
+## To Do
+
+- Allow more general function suppliance (backlog).
+- Automatically determine $\mathcal{T}\_0$ (likely this should just be the two points immediately surrounding $x^\*$ in the discrete sampling).
+- Automatically determine $n\_iter$ and consequently $\mathcal{T}$ based on convergence.
+- Automatically determine $I$.
