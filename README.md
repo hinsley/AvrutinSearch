@@ -28,7 +28,7 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and t
   We currently only implement the calculation of forward iterates of $\mathcal{T}\_0$; please refer to $n\_{\text{iter}}$ for more on this.
   In the future we may add a cache for the data $\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$, though forward iterates of $\mathcal{T}\_0$ would still be required in most cases to achieve optimal performance.
 
-- $\mathcal{I}$ is some closed bounded interval $[a, b]$ satisfying $x^\* \in \mathcal{I}$ and $f(\mathcal{I}) = \mathcal{I}$.
+- $\mathcal{I}$ is some closed bounded interval $[a, b]$ satisfying $x^\* \in \mathcal{I}$ and $f(\mathcal{I}) \subseteq \mathcal{I}$ (the paper assumes that $f(I) = I$, but this is unnecessary).
   In practice, this should be an `Interval` value.
   Currently, you do need to determine this interval by manual inspection of $f$; in the future we may implement an algorithm for determination of this interval.
   
