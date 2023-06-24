@@ -17,14 +17,16 @@ I = 0..1
 x_star = find_zero(x -> f_interpolated(x) - x, (0.5, 1))
 T_0 = x_star ± 1e-1
 r_max = UInt64(10)
-n_iter = UInt64(5)
+n_iter = UInt64(0)
 
 x, i = AvrutinSearch.homoclinic_to_equilibrium(xs, fs, x_star, T_0, I, r_max, n_iter)
+println("x = $x, i = $i")
 
 using Plots
 
 indices = round.(Int, LinRange(1, length(xs), 100))
-plt = plot([I.lo, I.hi], [I.lo, I.hi], label="Bisectrix", xlims=(I.lo, I.hi), ylims=(I.lo, I.hi), aspect_ratio=:equal)
+plt = plot(Shape([T_0.lo, T_0.hi, T_0.hi, T_0.lo], [I.lo, I.lo, I.hi, I.hi]), opacity=0.2, label="T_0", xlims=(I.lo, I.hi), ylims=(I.lo, I.hi), aspect_ratio=:equal)
+plot!(plt, [I.lo, I.hi], [I.lo, I.hi], label="Bisectrix")
 plot!(plt, xs[indices], fs[indices], label="f")
 x_forward_iterates = [x]
 for j in 1:i

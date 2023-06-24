@@ -82,10 +82,10 @@ function homoclinic_to_equilibrium(xs::Vector{Float64}, fs::Vector{Float64}, x_s
             for j in 1:k
                 if p ∈ f_V[j]
                     x = f_inv[j](p)
-                    if x ∈ T && x != x_star
+                    if x ∈ T && abs(x - x_star) > 1e-5
                         return (x, i+1)
                     end
-                    if x ∈ I && x != x_star
+                    if x ∈ I && abs(x - x_star) > 1e-5
                         push!(S_p, (x, i+1))
                     end
                 end
