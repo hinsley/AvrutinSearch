@@ -25,7 +25,7 @@ println("x = $x, i = $i")
 using Plots
 
 indices = round.(Int, LinRange(1, length(xs), 100))
-plt = plot(Shape([T_0.lo, T_0.hi, T_0.hi, T_0.lo], [I.lo, I.lo, I.hi, I.hi]), opacity=0.2, label="T_0", xlims=(I.lo, I.hi), ylims=(I.lo, I.hi), aspect_ratio=:equal)
+plt = plot(Shape([T_0.lo, T_0.hi, T_0.hi, T_0.lo], [I.lo, I.lo, I.hi, I.hi]), opacity=0.2, label="\$\\mathcal{T}_0\$", xlims=(I.lo, I.hi), ylims=(I.lo, I.hi), aspect_ratio=:equal)
 plot!(plt, [I.lo, I.hi], [I.lo, I.hi], label="Bisectrix")
 plot!(plt, xs[indices], fs[indices], label="f")
 x_forward_iterates = [x]
