@@ -6,6 +6,12 @@ using IntervalArithmetic
 using Peaks
 using Roots
 
+function iterate_interval(I::Interval, xs::Vector{Float64}, fs::Vector{Float64}, f)
+    I_indices = findfirst(x -> x ∈ I, xs):findlast(x -> x ∈ I, xs)
+    f_Is = vcat([f(I.lo)], fs[I_indices], [f(I.hi)])
+    f_I = min(f_Is...)..max(f_Is...)
+    return f_I
+end
 
 function homoclinic_to_equilibrium(xs::Vector{Float64}, fs::Vector{Float64}, x_star::Float64, T_0::Interval{Float64}, I::Interval{Float64}, r_max::UInt64, n_iter::UInt64=0)::Union{Tuple{Float64, UInt64}, Nothing}
     # Return values:
@@ -32,18 +38,17 @@ function homoclinic_to_equilibrium(xs::Vector{Float64}, fs::Vector{Float64}, x_s
     end
     
     # Check if f(I) ⊆ I.
-    I_indices = findfirst(x -> x ∈ I, xs):findlast(x -> x ∈ I, xs)
-    f_Is = vcat([f(I.lo)], fs[I_indices], [f(I.hi)])
-    f_I = min(f_Is...)..max(f_Is...)
+    f_I = iterate_interval(I, xs, fs, f)
     if !(f_I ⊆ I)
         throw(ArgumentError("f(I) must be contained within I."))
     end
 
     # Compute T as `n_iter'th iterate of T_0.
     T = T_0
-    #for _ in 1:n_iter
-    #    T = f(T)
-    #end
+    for _ in 1:n_iter
+        T = iterate_interval(T, xs, fs, f)
+        println(T)
+    end
 
     # Compute k, the intervals V_1, ..., V_k and functions f_1^{-1}, ..., f_k^{-1}.
     sample_points = vcat([I.lo], filter(x -> I.lo < x < I.hi, xs), [I.hi])
