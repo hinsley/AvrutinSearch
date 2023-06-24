@@ -9,7 +9,7 @@ using AvrutinSearch
 
 
 xs = collect(0.0:1e-7:1.0)
-f(x) = 4 * (x - x^2)
+f(x) = 3.8 * (x - x^2)
 fs = f.(xs)
 f_interpolated = linear_interpolation(xs, fs)
 

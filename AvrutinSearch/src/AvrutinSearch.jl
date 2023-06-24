@@ -23,7 +23,7 @@ function homoclinic_to_equilibrium(xs::Vector{Float64}, fs::Vector{Float64}, x_s
     f = linear_interpolation(xs, fs)
 
     # Check if x_star is a fixed point.
-    if f(x_star) != x_star
+    if abs(f(x_star) - x_star) > 1e-5
         throw(ArgumentError("x_star is not a fixed point."))
     end
 
@@ -47,7 +47,6 @@ function homoclinic_to_equilibrium(xs::Vector{Float64}, fs::Vector{Float64}, x_s
     T = T_0
     for _ in 1:n_iter
         T = iterate_interval(T, xs, fs, f)
-        println(T)
     end
 
     # Compute k, the intervals V_1, ..., V_k and functions f_1^{-1}, ..., f_k^{-1}.
