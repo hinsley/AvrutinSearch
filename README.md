@@ -44,6 +44,7 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and t
   More iterates mean  less pre-image computation steps during search; this can drastically improve search time.
 
 $\\{f\_j^{-1}, \mathcal{V}\_j\\}\_{j=1}^k$ is computed automatically.
+We prune any $\mathcal{V}\_j$ which lies fully within $\mathcal{T}$.
 
 ## To Do
 

@@ -6,7 +6,7 @@ using IntervalArithmetic
 using Peaks
 using Roots
 
-function iterate_interval(I::Interval, xs::Vector{Float64}, fs::Vector{Float64}, f)
+function iterate_interval(I::Interval, xs::Vector{Float64}, fs::Vector{Float64}, f)::Interval
     I_indices = findfirst(x -> x ∈ I, xs):findlast(x -> x ∈ I, xs)
     f_Is = vcat([f(I.lo)], fs[I_indices], [f(I.hi)])
     f_I = min(f_Is...)..max(f_Is...)
@@ -49,11 +49,12 @@ function homoclinic_to_equilibrium(xs::Vector{Float64}, fs::Vector{Float64}, x_s
         T = iterate_interval(T, xs, fs, f)
     end
 
-    # Compute k, the intervals V_1, ..., V_k and functions f_1^{-1}, ..., f_k^{-1}.
+    # Compute k, the intervals V_1, ..., V_k, and functions f_1^{-1}, ..., f_k^{-1}.
     sample_points = vcat([I.lo], filter(x -> I.lo < x < I.hi, xs), [I.hi])
     sample_values = f.(sample_points)
     partition = sort(vcat(1, Peaks.argmaxima(sample_values), Peaks.argminima(sample_values), length(sample_points)))
     V = [Interval(sample_points[partition[i]], sample_points[partition[i+1]]) for i in 1:length(partition)-1]
+    V = filter(V_i -> V_i ⊈ T, V) # Filter out those V_i fully contained in the target set.
     k = length(V)
     # Get the ranges of f over each V_i.
     f_V = []
@@ -81,7 +82,12 @@ function homoclinic_to_equilibrium(xs::Vector{Float64}, fs::Vector{Float64}, x_s
             i_max = max(i_max, i)
             for j in 1:k
                 if p ∈ f_V[j]
-                    x = f_inv[j](p)
+                    x = nothing
+                    try
+                        x = f_inv[j](p)
+                    catch BoundsError
+                        continue
+                    end
                     if x ∈ T && abs(x - x_star) > 1e-5
                         return (x, i+1)
                     end
