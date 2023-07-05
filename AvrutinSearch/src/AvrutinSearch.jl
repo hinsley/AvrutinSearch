@@ -13,7 +13,7 @@ function iterate_interval(I::Interval, xs::Vector{Float64}, fs::Vector{Float64},
     return f_I
 end
 
-function homoclinic_to_equilibrium(xs::Vector{Float64}, fs::Vector{Float64}, x_star::Float64, T_0::Interval{Float64}, I::Interval{Float64}, r_max::UInt64, n_iter::UInt64=0)::Union{Tuple{Float64, UInt64}, Nothing}
+function homoclinic_to_equilibrium(xs::Vector{Float64}, fs::Vector{Float64}, x_star::Float64, T_0::Interval{Float64}, I::Interval{Float64}, r_max::UInt64, n_iter::UInt64=UInt(0))::Union{Tuple{Float64, UInt64}, Nothing}
     # Return values:
     # true: Connection from x_star to T found.
     # false: Connection from x_star to T does not exist.
