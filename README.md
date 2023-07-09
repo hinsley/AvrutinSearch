@@ -6,7 +6,7 @@ A Julia implementation via interval arithmetic of the algorithm described in *Av
 ## Finding homoclinic orbits
 The algorithm from the paper is given below:
 
-![Listing 1 from *Avrutin V et al.*](AvrutinSearch/docs/resources/Listing1_pseudocode.png)
+![Listing 1 from *Avrutin V et al.*](docs/resources/Listing1_pseudocode.png)
 
 Note that line 11 in the pseudocode above is incorrect; it should be **if $p \in f(V_j)$ then**.
 
@@ -23,7 +23,7 @@ You must supply $f$, $x^\*$, $\mathcal{T}\_0$, $\mathcal{I}$, $r\_{\max}$, and t
   Practically, $\mathcal{T}\_0$ is supplied as an `Interval` value and should contain $x^\*$.
   Some guidelines for selecting $\mathcal{T}\_0$ are given in the paper by Avrutin et al.:
 
-  > ![Determination of target sets from *Avrutin V et al.*](AvrutinSearch/docs/resources/target_set_determination.png)
+  > ![Determination of target sets from *Avrutin V et al.*](docs/resources/target_set_determination.png)
 
 - $\mathcal{I}$ is some closed bounded interval $[a, b]$ satisfying $x^\* \in \mathcal{I}$ and $f(\mathcal{I}) \subseteq \mathcal{I}$ (the paper assumes that $f(\mathcal{I}) = \mathcal{I}$, but this is unnecessary).
   In practice, this should be an `Interval` value.
