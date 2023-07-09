@@ -3,6 +3,14 @@ uuid = "ed76c251-e25f-44f6-91ec-f57abd734d0d"
 authors = ["Carter David Hinsley <carterhinsley@outlook.com>"]
 version = "0.1.0"
 
+[compat]
+julia = "1.8"
+Interpolations = "0.14.7"
+IntervalArithmetic = "0.20.9"
+Peaks = "0.4.3"
+Plots = "1.38.16"
+Roots = "2.0.17"
+
 [deps]
 Interpolations = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
 IntervalArithmetic = "d1acc4aa-44c8-5952-acd4-ba5d80a2a253"
